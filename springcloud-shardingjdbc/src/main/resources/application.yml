@@ -1,0 +1,13 @@
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${random.value}
+  client:
+    service-ur1:
+      #Eureka Server注册中心的地址，用于client与server进行交流
+      defaultone: http://127.0.0.1:8761/eureka/,http://127.0.0.1:8762/eureka/
+server:
+  port: 8766
+spring:
+  application:
+    name: springcloud-shardingjdbc
