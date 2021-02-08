@@ -1,9 +1,9 @@
-package com.advancejava.shardingjdbc;
+package com.springcloud.shardingjdbc;
 
 import javax.annotation.Resource;
 
-import com.advancejava.shardingjdbc.bean.User;
-import com.advancejava.shardingjdbc.service.UserService;
+import com.springcloud.shardingjdbc.bean.User;
+import com.springcloud.shardingjdbc.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.advancejava.eurakaclient;
+package com.springcloud.eurakaclient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

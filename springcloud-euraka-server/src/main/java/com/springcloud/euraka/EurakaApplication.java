@@ -1,4 +1,4 @@
-package com.advencejava.euraka;
+package com.springcloud.euraka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.advancejava.shardingjdbc.bean;
+package com.springcloud.shardingjdbc.bean;
 
 import java.io.Serializable;
 

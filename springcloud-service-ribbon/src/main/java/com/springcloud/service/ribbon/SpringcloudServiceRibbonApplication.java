@@ -1,4 +1,4 @@
-package com.advancejava.service.ribbon;
+package com.springcloud.service.ribbon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

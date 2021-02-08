@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.advancejava.shardingjdbc.mapper.UserDAO">
-  <resultMap id="BaseResultMap" type="com.advancejava.shardingjdbc.bean.User">
+<mapper namespace="com.springcloud.shardingjdbc.mapper.UserDAO">
+  <resultMap id="BaseResultMap" type="com.springcloud.shardingjdbc.bean.User">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="age" jdbcType="INTEGER" property="age" />
@@ -19,11 +19,11 @@
     delete from user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.advancejava.shardingjdbc.bean.User">
+  <insert id="insert" parameterType="com.springcloud.shardingjdbc.bean.User">
     insert into user (id, `name`, age)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.advancejava.shardingjdbc.bean.User">
+  <insert id="insertSelective" parameterType="com.springcloud.shardingjdbc.bean.User">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -48,7 +48,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.advancejava.shardingjdbc.bean.User">
+  <update id="updateByPrimaryKeySelective" parameterType="com.springcloud.shardingjdbc.bean.User">
     update user
     <set>
       <if test="name != null">
@@ -60,7 +60,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.advancejava.shardingjdbc.bean.User">
+  <update id="updateByPrimaryKey" parameterType="com.springcloud.shardingjdbc.bean.User">
     update user
     set `name` = #{name,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER}

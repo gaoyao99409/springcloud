@@ -1,4 +1,4 @@
-package com.advancejava.service.feign;
+package com.springcloud.service.feign;
 
 import org.springframework.boot.test.context.SpringBootTest;
 

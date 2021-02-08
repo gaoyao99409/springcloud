@@ -1,6 +1,6 @@
-package com.advancejava.service.feign.client.impl;
+package com.springcloud.service.feign.client.impl;
 
-import com.advancejava.service.feign.client.TestService;
+import com.springcloud.service.feign.client.TestService;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,6 +1,6 @@
-package com.advancejava.service.feign.controller;
+package com.springcloud.service.ribbon.controller;
 
-import com.advancejava.service.feign.client.TestService;
+import com.springcloud.service.ribbon.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,8 +12,8 @@ public class TestController {
     TestService testService;
 
     @GetMapping(value = "/hi")
-    public String sayHi(@RequestParam String name) {
-        return testService.sayHiFromClientOne( name );
+    public String hi(@RequestParam String name) {
+        return testService.hiService( name );
     }
 
 }

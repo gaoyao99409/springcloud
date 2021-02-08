@@ -1,4 +1,4 @@
-package com.advancejava.service.ribbon.service;
+package com.springcloud.service.ribbon.service;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;

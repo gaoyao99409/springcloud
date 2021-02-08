@@ -1,11 +1,11 @@
-package com.advancejava.shardingjdbc;
+package com.springcloud.shardingjdbc;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.advancejava.shardingjdbc.mapper")
+@MapperScan("com.springcloud.shardingjdbc.mapper")
 public class SpringcloudShardingjdbcApplication {
 
 	public static void main(String[] args) {

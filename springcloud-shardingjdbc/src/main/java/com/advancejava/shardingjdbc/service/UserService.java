@@ -1,9 +1,9 @@
-package com.advancejava.shardingjdbc.service;
+package com.springcloud.shardingjdbc.service;
 
 import javax.annotation.Resource;
 
-import com.advancejava.shardingjdbc.bean.User;
-import com.advancejava.shardingjdbc.mapper.UserDAO;
+import com.springcloud.shardingjdbc.bean.User;
+import com.springcloud.shardingjdbc.mapper.UserDAO;
 import org.springframework.stereotype.Service;
 
 @Service

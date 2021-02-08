@@ -1,6 +1,6 @@
-package com.advancejava.shardingjdbc.mapper;
+package com.springcloud.shardingjdbc.mapper;
 
-import com.advancejava.shardingjdbc.bean.User;
+import com.springcloud.shardingjdbc.bean.User;
 
 
 public interface UserDAO {

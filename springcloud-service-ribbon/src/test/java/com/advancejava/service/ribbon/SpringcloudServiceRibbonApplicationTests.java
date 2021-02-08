@@ -1,4 +1,4 @@
-package com.advancejava.service.ribbon;
+package com.springcloud.service.ribbon;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
