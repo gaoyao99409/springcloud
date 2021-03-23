@@ -1,4 +1,4 @@
-package com.springcloud.springcloudshardingjdbcnew.model.primary;
+package com.springcloud.springcloudshardingjdbcnew.model.secondary;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User implements Serializable {
+public class SecondaryUser implements Serializable {
     private Long id;
 
     private String name;
