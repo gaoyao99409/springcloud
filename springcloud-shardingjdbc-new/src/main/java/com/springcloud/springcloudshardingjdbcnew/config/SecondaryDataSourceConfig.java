@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -25,11 +26,26 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 @MapperScan(basePackages = "com.springcloud.springcloudshardingjdbcnew.mapper.secondary", sqlSessionFactoryRef = "secondaryFactory")
 public class SecondaryDataSourceConfig {
 
+    @Value("${spring.datasource.secondary.url}")
+    private String url;
+    @Value("${spring.datasource.secondary.username}")
+    private String username;
+    @Value("${spring.datasource.secondary.password}")
+    private String password;
+    @Value("${spring.datasource.secondary.driver-class-name}")
+    private String driverClassName;
+
     @Bean(name = "secondaryDataSource")
-    @Qualifier("secondaryDataSource")
     @ConfigurationProperties(prefix="spring.datasource.secondary")
     public DataSource secondaryDataSource() {
-        return DataSourceBuilder.create().build();
+        //return DataSourceBuilder.create().build();
+        DataSource build =  DataSourceBuilder.create()
+                .driverClassName(driverClassName)
+                .url(url)
+                .username(username)
+                .password(password)
+                .build();
+        return build;
     }
 
     /**
