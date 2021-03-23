@@ -37,7 +37,12 @@ public class MoveDataController {
 
         primaryUserList.forEach(primaryUser -> {
             if (newDbNotContains(primaryUser)) {
-                secondaryUserMapper.insert(BeanTools.copyNonNullProperty(new SecondaryUser(), primaryUser));
+                try {
+                    secondaryUserMapper.insert(BeanTools.copyNonNullProperty(new SecondaryUser(), primaryUser));
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
             }
         });
 
