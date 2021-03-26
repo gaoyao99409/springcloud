@@ -30,27 +30,27 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class MsgConsumer {
 
-//    @Resource
-//    SecondaryUserMapper secondaryUserMapper;
-//    @RabbitListener(
-//            bindings =
-//                    {
-//                            @QueueBinding(value = @Queue(value = RabbitConfig.CANAL_QUEUE, durable = "true"),
-//                                    exchange = @Exchange(value = RabbitConfig.CANAL_EXCHANGE),
-//                                    key = RabbitConfig.CANAL_ROUTINGKEY)
-//                    })
-//    @RabbitHandler
-//    public void processDirectMsg(Message massage, Channel channel) throws Exception {
-//        String msg = new String(massage.getBody(), StandardCharsets.UTF_8);
-//        log.info("收到canal消息：{}", msg);
-//        JSONObject jsonObject = JSONObject.parseObject(msg);
-//
-//        SecondaryUser secondaryUser = JSONObject.parseObject(jsonObject.getJSONArray("data").getString(0), SecondaryUser.class);
-//        secondaryUserMapper.replaceUser(secondaryUser);
-//
-//        channel.basicAck(massage.getMessageProperties().getDeliveryTag(), false);
-//        //throw new Exception("");
-//    }
+    @Resource
+    SecondaryUserMapper secondaryUserMapper;
+    @RabbitListener(
+            bindings =
+                    {
+                            @QueueBinding(value = @Queue(value = RabbitConfig.CANAL_QUEUE, durable = "true"),
+                                    exchange = @Exchange(value = RabbitConfig.CANAL_EXCHANGE),
+                                    key = RabbitConfig.CANAL_ROUTINGKEY)
+                    })
+    @RabbitHandler
+    public void processDirectMsg(Message massage, Channel channel) throws Exception {
+        String msg = new String(massage.getBody(), StandardCharsets.UTF_8);
+        log.info("收到canal消息：{}", msg);
+        JSONObject jsonObject = JSONObject.parseObject(msg);
+
+        SecondaryUser secondaryUser = JSONObject.parseObject(jsonObject.getJSONArray("data").getString(0), SecondaryUser.class);
+        secondaryUserMapper.replaceUser(secondaryUser);
+
+        channel.basicAck(massage.getMessageProperties().getDeliveryTag(), false);
+        //throw new Exception("");
+    }
 
 
 }

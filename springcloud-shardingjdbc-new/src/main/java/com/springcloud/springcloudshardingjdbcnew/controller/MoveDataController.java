@@ -13,6 +13,7 @@ import com.springcloud.springcloudshardingjdbcnew.model.secondary.SecondaryUser;
 import com.springcloud.springcloudshardingjdbcnew.util.BeanTools;
 import com.springcloud.springcloudshardingjdbcnew.util.JsonUtil;
 import com.springcloud.springcloudshardingjdbcnew.util.MD5;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/moveData")
+@Slf4j
 public class MoveDataController {
 
     @Resource
@@ -75,10 +77,18 @@ public class MoveDataController {
                 && (secondaryUserList = secondaryUserMapper.getList(map)) != null) {
             String md5Primary = MD5.getMD5(JsonUtil.toJson(primaryUserList));
             String md5Secondary = MD5.getMD5(JsonUtil.toJson(secondaryUserList));
+
+            log.info("两个库的md5值, md5Primary={}, md5Secondary={}", md5Primary, md5Secondary);
             if (!md5Primary.equals(md5Secondary)) {
                 result = 0;
                 return result;
             }
+        }
+
+        //至少有个是空
+        if ((primaryUserList != null && primaryUserList.size() > 0)
+                || (secondaryUserList != null && secondaryUserList.size() > 0)) {
+            result = 0;
         }
 
         return result;
