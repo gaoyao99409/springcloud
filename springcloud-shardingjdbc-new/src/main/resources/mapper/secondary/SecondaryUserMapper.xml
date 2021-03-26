@@ -119,7 +119,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="getList" parameterType="map" resultMap="BaseResultMap">
+
+    <select id="getList" parameterType="map" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from user
@@ -138,5 +139,40 @@
       </if>
     </trim>
     order by id desc
+      <if test="limit != null and begin != null">
+        limit #{begin}, #{limit}
+      </if>
   </select>
+
+  <update id="replaceUser" parameterType="com.springcloud.springcloudshardingjdbcnew.model.secondary.SecondaryUser">
+    REPLACE INTO user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+    <if test="id != null">
+      #{id,jdbcType=BIGINT},
+    </if>
+    <if test="name != null">
+      #{name,jdbcType=VARCHAR},
+    </if>
+    <if test="age != null">
+      #{age,jdbcType=INTEGER},
+    </if>
+    <if test="createTime != null">
+      #{createTime,jdbcType=TIMESTAMP},
+    </if>
+    </trim>
+  </update>
 </mapper>

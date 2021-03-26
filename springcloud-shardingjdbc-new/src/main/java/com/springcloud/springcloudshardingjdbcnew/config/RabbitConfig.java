@@ -1,11 +1,18 @@
 package com.springcloud.springcloudshardingjdbcnew.config;
 
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.ConnectionFactory;
+import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +37,10 @@ public class RabbitConfig {
     public static final String TOPIC_QUEUE_NAME = "test_topic_queue";
     public static final String TEST_TOPIC_EXCHANGE = "testTopicExchange";
     public static final String TOPIC_ROUTINGKEY = "test.*";
+
+    public static final String CANAL_QUEUE = "canal-mq";
+    public static final String CANAL_EXCHANGE = "canal-exchange";
+    public static final String CANAL_ROUTINGKEY = "canal-routingkey";
 
     //创建队列
     @Bean
@@ -98,4 +109,24 @@ public class RabbitConfig {
                 to(defTopicExchange()).
                 with(TOPIC_ROUTINGKEY);
     }
+
+
+//    @Bean
+//    public SimpleMessageListenerContainer messageContainer() {
+//        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+//        container.setQueueNames(CANAL_QUEUE);
+//        container.setExposeListenerChannel(true);
+//        container.setMaxConcurrentConsumers(1);
+//        container.setConcurrentConsumers(1);
+//        container.setAcknowledgeMode(AcknowledgeMode.MANUAL); //设置确认模式手工确认
+//        container.setMessageListener(new ChannelAwareMessageListener() {
+//
+//            @Override
+//            public void onMessage(Message message, Channel channel) throws Exception {
+//                byte[] body = message.getBody();
+//                channel.basicAck(message.getMessageProperties().getDeliveryTag(), false); //确认消息成功消费
+//            }
+//        });
+//        return container;
+//    }
 }

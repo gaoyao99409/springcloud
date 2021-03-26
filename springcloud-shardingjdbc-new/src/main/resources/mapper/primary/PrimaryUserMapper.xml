@@ -138,5 +138,40 @@
       </if>
     </trim>
     order by id desc
+    <if test="limit != null and begin != null">
+      limit #{begin}, #{limit}
+    </if>
   </select>
+
+  <update id="replaceIntoUser" parameterType="com.springcloud.springcloudshardingjdbcnew.model.primary.PrimaryUser">
+    REPLACE INTO user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </update>
 </mapper>

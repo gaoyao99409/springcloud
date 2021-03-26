@@ -61,4 +61,6 @@ public interface SecondaryUserMapper {
      * @mbg.generated Mon Mar 22 09:50:42 CST 2021
      */
     List<SecondaryUser> getList(Map<String, Object> map);
+
+    int replaceUser(SecondaryUser secondaryUser);
 }

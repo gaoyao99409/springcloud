@@ -61,4 +61,6 @@ public interface PrimaryUserMapper {
      * @mbg.generated Mon Mar 22 09:50:42 CST 2021
      */
     List<PrimaryUser> getList(Map<String, Object> map);
+
+    int replaceIntoUser(PrimaryUser primaryUser);
 }

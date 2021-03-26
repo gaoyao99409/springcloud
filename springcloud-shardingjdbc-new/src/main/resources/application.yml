@@ -17,3 +17,11 @@ spring:
     port: 5672
     username: guest
     password: guest
+    listener:
+      simple:
+        # 手动确认
+        acknowledge-mode: manual
+        # 拒绝消息是否重回队列
+        default-requeue-rejected: true
+      direct:
+        acknowledge-mode: manual
