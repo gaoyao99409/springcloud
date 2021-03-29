@@ -25,3 +25,5 @@ spring:
         default-requeue-rejected: true
       direct:
         acknowledge-mode: manual
+    #发布消息是否需要回调确认，配合rabbitTemplate.setConfirmCallback(this);implements RabbitTemplate.ConfirmCallback
+    publisher-confirms: true

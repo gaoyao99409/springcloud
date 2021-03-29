@@ -28,7 +28,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class MsgConsumer {
+public class Consumer {
 
     @Resource
     SecondaryUserMapper secondaryUserMapper;
