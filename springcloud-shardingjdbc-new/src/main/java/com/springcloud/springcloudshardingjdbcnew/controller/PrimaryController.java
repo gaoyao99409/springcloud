@@ -7,9 +7,12 @@ import javax.annotation.Resource;
 
 import com.springcloud.springcloudshardingjdbcnew.mapper.primary.PrimaryUserMapper;
 import com.springcloud.springcloudshardingjdbcnew.model.primary.PrimaryUser;
+import com.springcloud.springcloudshardingjdbcnew.service.PrimaryService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,10 +28,18 @@ public class PrimaryController {
 
     @Resource
     PrimaryUserMapper primaryUserMapper;
+    @Resource
+    PrimaryService primaryService;
+
+    @GetMapping("/v1/list")
+    @Cacheable("targetClass + methodName + #param")
+    public Object getList(@RequestParam(value = "param", required = false) String param){
+        return primaryUserMapper.getList(new HashMap<>());
+    }
 
     @GetMapping("/v1")
-    public Object get(){
-        return primaryUserMapper.getList(new HashMap<>());
+    public Object getOne(@RequestParam(value = "id") Long id){
+        return primaryService.selectByPrimaryKey(id);
     }
 
     @PostMapping("/v1/batch")

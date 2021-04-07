@@ -14,6 +14,7 @@ import com.springcloud.springcloudshardingjdbcnew.util.BeanTools;
 import com.springcloud.springcloudshardingjdbcnew.util.JsonUtil;
 import com.springcloud.springcloudshardingjdbcnew.util.MD5;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.ListUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,8 +70,10 @@ public class MoveDataController {
         int result = 1;
 
         HashMap<String, Object> map = Maps.newHashMap();
+        long begin = 1;
+        long limit = 1000;
         map.put("limit", 1000);
-        map.put("begin", 1);
+        map.put("begin", begin);
         List<PrimaryUser> primaryUserList = null;
         List<SecondaryUser> secondaryUserList = null;
         while ((primaryUserList = primaryUserMapper.getList(map)) != null
@@ -78,17 +81,13 @@ public class MoveDataController {
             String md5Primary = MD5.getMD5(JsonUtil.toJson(primaryUserList));
             String md5Secondary = MD5.getMD5(JsonUtil.toJson(secondaryUserList));
 
-            log.info("两个库的md5值, md5Primary={}, md5Secondary={}", md5Primary, md5Secondary);
             if (!md5Primary.equals(md5Secondary)) {
-                result = 0;
-                return result;
+                log.info("从{}开始 数据有差异", primaryUserList.get(0).getId());
+                return 0;
             }
-        }
-
-        //至少有个是空
-        if ((primaryUserList != null && primaryUserList.size() > 0)
-                || (secondaryUserList != null && secondaryUserList.size() > 0)) {
-            result = 0;
+            log.info("{}, 两个库的md5值={}, md5Primary={}, md5Secondary={}", primaryUserList.get(0).getId(), md5Primary.equals(md5Secondary), md5Primary, md5Secondary);
+            begin += limit;
+            map.put("begin", begin);
         }
 
         return result;
