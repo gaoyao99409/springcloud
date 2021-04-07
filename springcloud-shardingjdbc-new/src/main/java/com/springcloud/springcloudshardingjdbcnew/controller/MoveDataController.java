@@ -76,8 +76,10 @@ public class MoveDataController {
         map.put("begin", begin);
         List<PrimaryUser> primaryUserList = null;
         List<SecondaryUser> secondaryUserList = null;
-        while ((primaryUserList = primaryUserMapper.getList(map)) != null
-                && (secondaryUserList = secondaryUserMapper.getList(map)) != null) {
+        while ((primaryUserList = primaryUserMapper.getList(map)) != null &&
+                primaryUserList.size() > 0 &&
+                (secondaryUserList = secondaryUserMapper.getList(map)) != null &&
+                secondaryUserList.size() > 0) {
             String md5Primary = MD5.getMD5(JsonUtil.toJson(primaryUserList));
             String md5Secondary = MD5.getMD5(JsonUtil.toJson(secondaryUserList));
 
@@ -88,6 +90,13 @@ public class MoveDataController {
             log.info("{}, 两个库的md5值={}, md5Primary={}, md5Secondary={}", primaryUserList.get(0).getId(), md5Primary.equals(md5Secondary), md5Primary, md5Secondary);
             begin += limit;
             map.put("begin", begin);
+        }
+
+        //至少有个是空
+        if ((primaryUserList != null && primaryUserList.size() > 0)
+                || (secondaryUserList != null && secondaryUserList.size() > 0)) {
+            log.info("从{}开始 数据有差异", primaryUserList.get(0).getId());
+            result = 0;
         }
 
         return result;
