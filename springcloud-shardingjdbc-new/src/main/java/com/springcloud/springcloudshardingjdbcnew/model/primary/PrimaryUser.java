@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
 
 /**
@@ -28,4 +30,6 @@ public class PrimaryUser implements Serializable {
      * @mbg.generated Mon Mar 22 09:50:42 CST 2021
      */
     private static final long serialVersionUID = 1L;
+
+
 }

@@ -2,15 +2,20 @@ package com.springcloud.springcloudshardingjdbcnew.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.google.common.collect.Maps;
 import com.springcloud.springcloudshardingjdbcnew.mapper.primary.PrimaryUserMapper;
 import com.springcloud.springcloudshardingjdbcnew.model.primary.PrimaryUser;
+import com.springcloud.springcloudshardingjdbcnew.model.secondary.SecondaryUser;
 import com.springcloud.springcloudshardingjdbcnew.service.PrimaryService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +45,20 @@ public class PrimaryController {
     @GetMapping("/v1")
     public Object getOne(@RequestParam(value = "id") Long id){
         return primaryService.selectByPrimaryKey(id);
+    }
+
+    @PostMapping("/v1")
+    public int save(@RequestBody PrimaryUser primaryUser){
+        return primaryUserMapper.insertSelective(primaryUser);
+    }
+
+    @GetMapping("/v1/max")
+    public Object getMaxOne(){
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("limit", 1);
+        map.put("begin", 1);
+        List<PrimaryUser> primaryUserList = primaryUserMapper.getList(map);
+        return primaryUserList.get(0);
     }
 
     @PostMapping("/v1/batch")
