@@ -10,4 +10,4 @@ spring:
           search-paths: springcloud-config-git
           username: gaoyao99409
           password: gaoyao910270
-      label: master
+      #label: master
