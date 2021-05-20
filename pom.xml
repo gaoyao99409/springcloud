@@ -9,11 +9,16 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
+        <module>springcloud-config-server</module>
         <module>springcloud-euraka-server</module>
         <module>springcloud-euraka-client</module>
         <module>springcloud-service-feign</module>
         <module>springcloud-service-ribbon</module>
         <module>springcloud-shardingjdbc</module>
+        <module>springcloud-shardingjdbc-new</module>
+        <module>springcloud-shardingjdbc-old</module>
+        <module>springcloud-shardingjdbc-table</module>
+        <module>test</module>
     </modules>
 
     <parent>
