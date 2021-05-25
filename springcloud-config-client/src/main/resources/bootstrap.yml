@@ -1,0 +1,17 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      label: master
+      profile: dev
+      uri: http://localhost:9000/
+eureka:
+  client:
+    servieUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${random.value}

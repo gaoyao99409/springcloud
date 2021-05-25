@@ -1,13 +1,13 @@
-package com.springcloud.configclient;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class SpringcloudConfigClientApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
-
-}
+//package com.springcloud.configclient;
+//
+//import org.junit.jupiter.api.Test;
+//import org.springframework.boot.test.context.SpringBootTest;
+//
+//@SpringBootTest
+//class SpringcloudConfigClientApplicationTests {
+//
+//    @Test
+//    void contextLoads() {
+//    }
+//
+//}

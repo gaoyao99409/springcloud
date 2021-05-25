@@ -10,4 +10,8 @@ spring:
           search-paths: test-config
           username: gaoyao99409
           password: gaoyao910270
-      #label: master
+      label: master
+eureka:
+  client:
+    servieUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
