@@ -6,8 +6,8 @@ spring:
       server:
         default-application-name: config-server
         git:
-          uri: https://github.com/gaoyao99409/springcloud.git
-          search-paths: springcloud-config-git
+          uri: https://gitee.com/gaoyao99409/springcloud-config-git.git
+          search-paths: test-config
           username: gaoyao99409
           password: gaoyao910270
       #label: master

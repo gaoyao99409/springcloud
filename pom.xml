@@ -10,6 +10,7 @@
 
     <modules>
         <module>springcloud-config-server</module>
+        <module>springcloud-config-client</module>
         <module>springcloud-euraka-server</module>
         <module>springcloud-euraka-client</module>
         <module>springcloud-service-feign</module>
