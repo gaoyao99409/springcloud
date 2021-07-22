@@ -33,14 +33,15 @@ public class Script {
 //    private int dmToNpcCount;
 
     //主题
-    private String theme;
+//    private String theme;
+    private Integer themeCode;
     //人数
     private String pepleCount;
 
-    public Script(Long id, int dmCount, String theme) {
+    public Script(Long id, int dmCount, int themeCode) {
         this.id = id;
         this.dmCount = dmCount;
-        this.theme = theme;
+        this.themeCode = themeCode;
     }
 
     public Script() {

@@ -21,5 +21,7 @@ public class GraphMatch {
 
     private Order[] orderArr;
     private Dm[] dmArr;
+    private Npc[] npcArr;
+    private Room[] roomArr;
 
 }

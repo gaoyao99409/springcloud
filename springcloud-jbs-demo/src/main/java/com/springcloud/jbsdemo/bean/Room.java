@@ -14,9 +14,17 @@ import lombok.Data;
 @Data
 public class Room {
 
+    private Long id;
     private int pepleCount;
-    private String theme;
+    private List<Integer> themeCodeList;
     private List<PriorityScript> scriptList;
     private List<JbsDate> dateList;
 
+    public Room(Long id, int pepleCount, List<Integer> themeCodeList, List<PriorityScript> scriptList, List<JbsDate> dateList) {
+        this.id = id;
+        this.pepleCount = pepleCount;
+        this.themeCodeList = themeCodeList;
+        this.scriptList = scriptList;
+        this.dateList = dateList;
+    }
 }

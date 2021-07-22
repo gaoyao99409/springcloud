@@ -15,6 +15,7 @@ import lombok.Data;
 @Data
 public class Order {
 
+    private Integer playerCount;
     private Long id;
     private JbsDate date;
     private Script script;
@@ -25,6 +26,13 @@ public class Order {
         this.id = id;
         this.date = date;
         this.script = script;
+    }
+
+    public Order(Long id, JbsDate date, Script script, Integer playerCount) {
+        this.id = id;
+        this.date = date;
+        this.script = script;
+        this.playerCount = playerCount;
     }
 
     public Order() {

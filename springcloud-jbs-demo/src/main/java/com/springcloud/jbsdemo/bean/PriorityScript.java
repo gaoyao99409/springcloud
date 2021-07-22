@@ -14,13 +14,13 @@ public class PriorityScript extends Script{
 
     private int priority;
 
-    public PriorityScript(Long id, int dmCount, String theme, int priority) {
+    public PriorityScript(Long id, int dmCount, Integer theme, int priority) {
         super(id, dmCount, theme);
         this.priority = priority;
     }
 
     public PriorityScript(Script script, int priority){
-        super(script.getId(), script.getDmCount(), script.getTheme());
+        super(script.getId(), script.getDmCount(), script.getThemeCode());
         this.priority = priority;
     }
 
