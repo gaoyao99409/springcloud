@@ -35,14 +35,21 @@ public class XylCal {
         List<JbsDate> dateList = new ArrayList<>();
         dateList.add(new JbsDate(new Date(), DateUtil.addDays(new Date(), 3)));
 
-        List<PriorityScript> priorityScriptList = new ArrayList<PriorityScript>();
-        priorityScriptList.add(new PriorityScript(os, 1));
-        priorityScriptList.add(new PriorityScript(rs, 1));
-        priorityScriptList.add(new PriorityScript(kb, 1));
+        List<PriorityScript> dm1PriorityScriptList = new ArrayList<PriorityScript>();
+        dm1PriorityScriptList.add(new PriorityScript(os, 1));
+        dm1PriorityScriptList.add(new PriorityScript(rs, 1));
+        dm1PriorityScriptList.add(new PriorityScript(kb, 1));
+        Dm dm1 = new Dm(1l, dateList, dm1PriorityScriptList);
 
-        Dm dm1 = new Dm(1l, dateList, priorityScriptList);
-        Dm dm2 = new Dm(2l, dateList, priorityScriptList);
-        Dm dm3 = new Dm(3l, dateList, priorityScriptList);
+        List<PriorityScript> dm2PriorityScriptList = new ArrayList<PriorityScript>();
+        dm2PriorityScriptList.add(new PriorityScript(os, 1));
+        Dm dm2 = new Dm(2l, dateList, dm2PriorityScriptList);
+
+        List<PriorityScript> dm3PriorityScriptList = new ArrayList<PriorityScript>();
+        dm3PriorityScriptList.add(new PriorityScript(os, 1));
+        dm3PriorityScriptList.add(new PriorityScript(kb, 1));
+        Dm dm3 = new Dm(3l, dateList, dm3PriorityScriptList);
+
         List<Dm> dmList = new ArrayList<>();
         dmList.add(dm1);
         dmList.add(dm2);
@@ -51,14 +58,17 @@ public class XylCal {
         Order order = new Order();
         order.setDate(new JbsDate(new Date(), DateUtil.addDays(new Date(), 2)));
         order.setScript(os);
+        order.setId(1l);
 
         Order order2 = new Order();
         order2.setDate(new JbsDate(new Date(), DateUtil.addDays(new Date(), 2)));
         order2.setScript(rs);
+        order2.setId(2l);
 
         Order order3 = new Order();
         order3.setDate(new JbsDate(new Date(), DateUtil.addDays(new Date(), 2)));
         order3.setScript(kb);
+        order3.setId(3l);
 
         List<Order> orderList  = new ArrayList<>();
         orderList.add(order);
@@ -150,7 +160,7 @@ public class XylCal {
      */
     private static void log(GraphMatch graphMatch){
         for(int i = 0 ; i < graphMatch.getPath().length ; i ++){
-            if (graphMatch.getPath()[i] > 0) {
+            if (graphMatch.getPath()[i] >= 0) {
                 System.out.println(graphMatch.getDmArr()[graphMatch.getPath()[i]] + "<--->" + graphMatch.getOrderArr()[i]);
             }
         }
