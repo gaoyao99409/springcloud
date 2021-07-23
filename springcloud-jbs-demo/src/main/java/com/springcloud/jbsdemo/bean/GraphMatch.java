@@ -18,6 +18,7 @@ public class GraphMatch {
     private boolean[] checkedPath;
     //已找到路线
     private int[] path;
+    private int[][] selectedPath;
 
     private Order[] orderArr;
     private Dm[] dmArr;
