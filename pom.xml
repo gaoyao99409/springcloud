@@ -20,7 +20,7 @@
         <module>springcloud-shardingjdbc-old</module>
         <module>springcloud-shardingjdbc-table</module>
         <module>test</module>
-        <module>springcloud-jbs-demo</module>
+        <!--<module>springcloud-jbs-demo</module>-->
     </modules>
 
     <parent>
