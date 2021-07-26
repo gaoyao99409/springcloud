@@ -24,6 +24,10 @@ public class Order {
     int selectedDmBoyCount = 0;
     int selectedDmGirlCount = 0;
 
+    int selectedNpcCount = 0;
+    int selectedNpcBoyCount = 0;
+    int selectedNpcGirlCount = 0;
+
     //订单指定dm
     private List<Dm> dm;
 

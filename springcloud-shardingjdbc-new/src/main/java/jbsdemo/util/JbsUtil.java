@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class JbsUtil {
 
-    public static boolean containsDate(List<JbsDate> list, JbsDate jbsDate) {
+    public static boolean  containsDate(List<JbsDate> list, JbsDate jbsDate) {
 
         //list排序
         Collections.sort(list);
@@ -66,15 +66,18 @@ public class JbsUtil {
 
     /**
      * 查看dm时间对订单可用
-     * @param dm
+     * @param worker
      * @param order
      * @return
      */
-    public static boolean hasTime(Dm dm, Order order) {
-        if (containsDate(dm.getDateList(), order.getDate())) {
-            if (!containsDate(dm.getUsedDateList(), order.getDate())) {
-                return true;
+    public static boolean hasTime(Worker worker, Order order) {
+        if (containsDate(worker.getDateList(), order.getDate())) {
+            for (JbsDate used : worker.getUsedDateList()) {
+                if (DateUtil.isDateOverlapping(used.getStart(), used.getEnd(), order.getDate().getStart(), order.getDate().getEnd())) {
+                    return false;
+                }
             }
+            return true;
         }
         return false;
     }

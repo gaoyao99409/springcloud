@@ -15,6 +15,8 @@ import lombok.Data;
 public class Npc extends Worker {
 
     private Long id;
+    private Integer index;
+    private Integer score;
 
     public Npc(Long id, List<JbsDate> dateList, List<PriorityScript> scriptList){
         this.id = id;

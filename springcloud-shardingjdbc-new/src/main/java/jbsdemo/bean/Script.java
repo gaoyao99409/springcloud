@@ -18,16 +18,16 @@ public class Script {
     //npc数量
     private int npcCount;
     //男npc数量
-    private int boyNpcCount;
+    private int boyNpcCount = -1;
     //女npc数量
-    private int girlNpcCount;
+    private int girlNpcCount = -1;
 
     //dm数量
     private int dmCount;
     //男dm数量
-    private int boyDmCount;
+    private int boyDmCount = -1;
     //女dm数量
-    private int girlDmCount;
+    private int girlDmCount = -1;
 
     //DM反串NPC数量  直接减去需要的npc数量即可
 //    private int dmToNpcCount;
