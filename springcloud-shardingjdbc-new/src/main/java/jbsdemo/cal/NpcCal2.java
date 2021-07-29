@@ -225,7 +225,7 @@ public class NpcCal2 {
                 graphMatch.getSelectedPath()[orderIndex][npcIndex] = orderIndex;
                 npc.getUsedDateList().add(order.getDate());
             } else {
-                //dm可接此单，但是已有订单B，让订单B去试试其它dm
+                //npc可接此单，但是已有订单B，让订单B去试试其它npc
                 if (JbsUtil.containsDate(npc.getDateList(), order.getDate())) {
                     Order orderB = null;
                     int orderBIndex = -1;
@@ -258,7 +258,7 @@ public class NpcCal2 {
                         graphMatch.getCheckedPath()[orderBIndex] = false;
                     } else {
                         //没找到，恢复订单B
-                        orderB.setSelectedDmCount(orderB.getSelectedNpcCount() + 1);
+                        orderB.setSelectedNpcCount(orderB.getSelectedNpcCount() + 1);
                         if (orderB.getScript().getBoyNpcCount() > 0) {
                             if (npc.getSex() == SexEnum.BOY.getCode()) {
                                 orderB.setSelectedNpcBoyCount(orderB.getSelectedNpcBoyCount() + 1);

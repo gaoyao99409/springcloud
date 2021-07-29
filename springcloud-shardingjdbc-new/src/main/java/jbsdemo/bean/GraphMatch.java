@@ -25,4 +25,22 @@ public class GraphMatch {
     private Npc[] npcArr;
     private Room[] roomArr;
 
+    public boolean haveSelectedPath(int orderIndex){
+        for (int i=0; i<selectedPath[orderIndex].length; i++) {
+            if (selectedPath[orderIndex][i] > -1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getOrderIndexByPath(int orderIndex){
+        for (int i=0; i<path.length; i++) {
+            if (orderIndex == path[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }
