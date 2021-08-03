@@ -136,7 +136,7 @@ public class DmCal2 {
      * @param graphMatch
      */
     private static void clearOnPathSign(GraphMatch graphMatch){
-        graphMatch.setCheckedPath(new boolean[graphMatch.getOrderArr().length]);
+        graphMatch.setCheckedPath(new boolean[graphMatch.getDmArr().length]);
     }
 
 
@@ -157,6 +157,9 @@ public class DmCal2 {
      */
     private static boolean search(GraphMatch graphMatch , Integer orderIndex){
         Order order = graphMatch.getOrderArr()[orderIndex];
+        if (!order.isOrderIsOk()) {
+            return false;
+        }
         //按照订单的主题分数排序dm
         int[] arr = graphMatch.getEdges()[orderIndex];
         List<Dm> list = Lists.newArrayList();
@@ -230,6 +233,7 @@ public class DmCal2 {
                     }
                     //标记，占用这个dm的order时间, 把这个B订单的selectedDmCount减一,然后让这个B订单去找新的dm
                     orderB.setSelectedDmCount(orderB.getSelectedDmCount()-1);
+                    int[] orderBArr = graphMatch.getSelectedPath()[orderBIndex];
                     if (orderB.getScript().getBoyDmCount() > 0) {
                         if (dm.getSex() == SexEnum.BOY.getCode()) {
                             orderB.setSelectedDmBoyCount(orderB.getSelectedDmBoyCount() - 1);
@@ -245,6 +249,8 @@ public class DmCal2 {
                         //去掉订单B和此dm的连接路径
                         graphMatch.getSelectedPath()[orderBIndex][dmIndex] = -1;
                         graphMatch.getCheckedPath()[orderBIndex] = false;
+                        //去掉dm的orderB的时间
+                        graphMatch.getDmArr()[dmIndex].getUsedDateList().remove(orderB.getDate());
                     } else {
                         //没找到，恢复订单B
                         orderB.setSelectedDmCount(orderB.getSelectedDmCount() + 1);
@@ -256,6 +262,7 @@ public class DmCal2 {
                             }
                         }
                         graphMatch.getCheckedPath()[orderBIndex] = false;
+                        graphMatch.getSelectedPath()[orderBIndex] = orderBArr;
                         continue;
                     }
                 }
@@ -286,14 +293,14 @@ public class DmCal2 {
             return true;
         } else {
             //B订单去找其他路径没找到情况下，不重置B订单已找到的路径
-            if (!graphMatch.getCheckedPath()[orderIndex]) {
-                for (int i=0; i<graphMatch.getSelectedPath()[orderIndex].length; i++) {
-                    if (graphMatch.getSelectedPath()[orderIndex][i] > -1) {
-                        graphMatch.getDmArr()[i].getUsedDateList().remove(order.getDate());
-                    }
-                    graphMatch.getSelectedPath()[orderIndex][i] = -1;
-                }
-            }
+//            if (graphMatch.getCheckedPath()[orderIndex]) {
+//                for (int i=0; i<graphMatch.getSelectedPath()[orderIndex].length; i++) {
+//                    if (graphMatch.getSelectedPath()[orderIndex][i] > -1) {
+//                        //graphMatch.getDmArr()[i].getUsedDateList().remove(order.getDate());
+//                    }
+//                    //graphMatch.getSelectedPath()[orderIndex][i] = -1;
+//                }
+//            }
             return false;
         }
     }

@@ -20,11 +20,10 @@ public class Room {
     private List<PriorityScript> scriptList;
     private List<JbsDate> dateList;
 
-    public Room(Long id, int pepleCount, List<Integer> themeCodeList, List<PriorityScript> scriptList, List<JbsDate> dateList) {
+    public Room(Long id, int pepleCount, List<Integer> themeCodeList, List<JbsDate> dateList) {
         this.id = id;
         this.pepleCount = pepleCount;
         this.themeCodeList = themeCodeList;
-        this.scriptList = scriptList;
         this.dateList = dateList;
     }
 }

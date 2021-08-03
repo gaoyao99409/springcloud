@@ -12,6 +12,10 @@ public enum  ThemeEnum {
     OUSHI(2, "欧式"),
     KONGBU(3, "恐怖"),
     GUFENG(4, "古风"),
+    t_1(5, "1"),
+    t_2(6, "2"),
+    t_3(7, "3"),
+    t_4(8, "4"),
 
     ;
     int code;

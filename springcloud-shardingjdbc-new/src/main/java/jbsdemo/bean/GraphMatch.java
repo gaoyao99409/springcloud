@@ -26,10 +26,29 @@ public class GraphMatch {
     private Room[] roomArr;
 
     public boolean haveSelectedPath(int orderIndex){
+        if (orderArr[orderIndex].getScript().getNpcCount() == 0) {
+            return true;
+        }
         for (int i=0; i<selectedPath[orderIndex].length; i++) {
             if (selectedPath[orderIndex][i] > -1) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean dmIsOk(int orderIndex){
+        Order order = orderArr[orderIndex];
+        if (order.getSelectedDmCount() >= order.getScript().getDmCount()) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean npcIsOk(int orderIndex){
+        Order order = orderArr[orderIndex];
+        if (order.getSelectedNpcCount() >= order.getScript().getNpcCount()) {
+            return true;
         }
         return false;
     }

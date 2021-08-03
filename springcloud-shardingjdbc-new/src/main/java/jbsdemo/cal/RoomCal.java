@@ -29,9 +29,9 @@ public class RoomCal {
 
         List<JbsDate> roomDateList = new ArrayList<>();
         roomDateList.add(new JbsDate(new Date(), DateUtil.addDays(new Date(), 3)));
-        Room r1 = new Room(1l,10, themeCodeList, null, roomDateList);
-        Room r2 = new Room(2l,5, themeCodeList, null, roomDateList);
-        Room r3 = new Room(3l,6, themeCodeList, null, roomDateList);
+        Room r1 = new Room(1l,10, themeCodeList, roomDateList);
+        Room r2 = new Room(2l,5, themeCodeList, roomDateList);
+        Room r3 = new Room(3l,6, themeCodeList, roomDateList);
         List<Room> roomList = Lists.newArrayList(r1, r2, r3);
 
         Order order = new Order(1l, new JbsDate(new Date(), DateUtil.addDays(new Date(), 2)), os, 5);

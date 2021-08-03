@@ -168,6 +168,10 @@ public class NpcCal2 {
      */
     private static boolean search(GraphMatch graphMatch , Integer orderIndex){
         Order order = graphMatch.getOrderArr()[orderIndex];
+        if (!order.isOrderIsOk()) {
+            return false;
+        }
+
         //按照订单的主题分数排序dm
         int[] arr = graphMatch.getEdges()[orderIndex];
         List<Npc> list = Lists.newArrayList();

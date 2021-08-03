@@ -23,7 +23,7 @@ public class Script {
     private int girlNpcCount = -1;
 
     //dm数量
-    private int dmCount;
+    private int dmCount = 0;
     //男dm数量
     private int boyDmCount = -1;
     //女dm数量

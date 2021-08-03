@@ -33,9 +33,9 @@ public class RoomCal2 {
 
         List<JbsDate> roomDateList = new ArrayList<>();
         roomDateList.add(new JbsDate(new Date(), DateUtil.addDays(new Date(), 3)));
-        Room r1 = new Room(1l,10, themeCodeList, null, roomDateList);
-        Room r2 = new Room(2l,5, themeCodeList, null, roomDateList);
-        Room r3 = new Room(3l,6, themeCodeList, null, roomDateList);
+        Room r1 = new Room(1l,10, themeCodeList, roomDateList);
+        Room r2 = new Room(2l,5, themeCodeList, roomDateList);
+        Room r3 = new Room(3l,6, themeCodeList, roomDateList);
         List<Room> roomList = Lists.newArrayList(r1, r2, r3);
 
         Order order = new Order(1l, new JbsDate(new Date(), DateUtil.addDays(new Date(), 2)), os, 5);
@@ -65,7 +65,7 @@ public class RoomCal2 {
      */
     private static GraphMatch init(List<Order> orderlist, List<Room> roomList){
         GraphMatch graphMatch = new GraphMatch();
-        int[][] edges = new int[roomList.size()][orderlist.size()];
+        int[][] edges = new int[orderlist.size()][roomList.size()];
         graphMatch.setRoomArr(roomList.toArray(new Room[roomList.size()]));
         graphMatch.setOrderArr(orderlist.toArray(new Order[orderlist.size()]));
 
@@ -83,8 +83,8 @@ public class RoomCal2 {
         }
 
         graphMatch.setEdges(edges);
-        graphMatch.setCheckedPath(new boolean[graphMatch.getOrderArr().length]);
-        int[] pathAry = new int[graphMatch.getOrderArr().length];
+        graphMatch.setCheckedPath(new boolean[graphMatch.getRoomArr().length]);
+        int[] pathAry = new int[graphMatch.getRoomArr().length];
         for(int i = 0 ; i < pathAry.length ; i ++){
             pathAry[i] = -1;
         }
@@ -98,7 +98,7 @@ public class RoomCal2 {
      * @param graphMatch
      */
     private static void clearOnPathSign(GraphMatch graphMatch){
-        graphMatch.setCheckedPath(new boolean[graphMatch.getOrderArr().length]);
+        graphMatch.setCheckedPath(new boolean[graphMatch.getRoomArr().length]);
     }
 
     /**
@@ -108,6 +108,10 @@ public class RoomCal2 {
      * @return 是否成功
      */
     private static boolean search(GraphMatch graphMatch , Integer orderIndex){
+        Order order = graphMatch.getOrderArr()[orderIndex];
+        if (!order.isOrderIsOk()) {
+            return false;
+        }
 
         for(int roomIndex = 0 ; roomIndex < graphMatch.getEdges()[orderIndex].length ; roomIndex ++){
             //没有连线

@@ -28,6 +28,9 @@ public class Order {
     int selectedNpcBoyCount = 0;
     int selectedNpcGirlCount = 0;
 
+    //订单默认是可用的，当dm、npc、room某一个资源不足时，为false
+    boolean orderIsOk = true;
+
     //订单指定dm
     private List<Dm> dm;
 
