@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.springcloud</groupId>
-	<artifactId>jbs-demo</artifactId>
+	<artifactId>springcloud-jbs-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>jbs-demo</name>
+	<name>springcloud-jbs-demo</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
