@@ -1,0 +1,12 @@
+server:
+  port: 1234
+spring:
+  application:
+    name: springcloud-jbs-demo
+  datasource:
+    url: jdbc:mysql://localhost:3306/jbs?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: root
+    password: root123456
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
