@@ -15,7 +15,7 @@ import lombok.Data;
 @ApiModel(value = "")
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Order implements Serializable {
+public class JbsOrder implements Serializable {
     @ApiModelProperty(value = "")
     private Long id;
 

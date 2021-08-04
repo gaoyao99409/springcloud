@@ -4,9 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import com.google.common.collect.Maps;
-import com.springcloud.jbsdemo.mapper.OrderMapper;
-import com.springcloud.jbsdemo.model.Order;
+import com.springcloud.jbsdemo.mapper.JbsOrderMapper;
+import com.springcloud.jbsdemo.model.JbsOrder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @Resource
-    OrderMapper orderMapper;
+    JbsOrderMapper orderMapper;
 
     @GetMapping("/order")
-    public List<Order> getOrder(){
-        List<Order> list = orderMapper.getList(Maps.newHashMap());
+    public List<JbsOrder> getOrder(){
+        List<JbsOrder> list = orderMapper.selectList(null);
         return list;
     }
 
