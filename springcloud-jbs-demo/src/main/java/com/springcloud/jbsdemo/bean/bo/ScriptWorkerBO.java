@@ -18,4 +18,5 @@ public class ScriptWorkerBO extends ScriptWorker {
     private Boolean selected = false;
     private List<JbsOrderBO> hasSelectedOrderList = Lists.newArrayList();
 
+    private boolean lock = false;
 }

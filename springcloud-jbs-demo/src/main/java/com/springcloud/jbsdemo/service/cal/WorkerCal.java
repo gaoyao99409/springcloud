@@ -9,7 +9,6 @@ import com.springcloud.jbsdemo.bean.bo.JbsOrderBO;
 import com.springcloud.jbsdemo.bean.bo.ScriptWorkerBO;
 import com.springcloud.jbsdemo.bean.bo.ScriptWorkerRoleBO;
 import com.springcloud.jbsdemo.model.ScriptWorker;
-import com.springcloud.jbsdemo.model.Worker;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,8 +22,10 @@ import org.springframework.stereotype.Service;
 public class WorkerCal {
 
     Map<Long, List<JbsOrderBO>> workerUsedMap = Maps.newHashMap();
+    Map<Long, Boolean> workerLockMap = Maps.newHashMap();
 
     public void find(List<JbsOrderBO> jbsOrderBOList) {
+        workerUsedMap.clear();
         for (JbsOrderBO jbsOrderBO : jbsOrderBOList) {
             addWorkerUsedMap(jbsOrderBO);
             findOrderRole(jbsOrderBO);
@@ -39,7 +40,9 @@ public class WorkerCal {
         for (ScriptWorkerRoleBO scriptWorkerRoleBO : jbsOrderBO.getScript().getScriptWorkerRoleList()) {
             for (ScriptWorker scriptWorker : scriptWorkerRoleBO.getScriptWorkerList()) {
                 //todo 此处初始化 后续可以把已经分好的订单数据加入到workerUsedMap中。 只有新订单没有worker数据
-                workerUsedMap.put(scriptWorker.getWorkerId(), Lists.newArrayList());
+                if (!workerUsedMap.containsKey(scriptWorker.getWorkerId())) {
+                    workerUsedMap.put(scriptWorker.getWorkerId(), Lists.newArrayList());
+                }
             }
         }
     }
@@ -59,13 +62,18 @@ public class WorkerCal {
     public boolean findRoleWorker(JbsOrderBO jbsOrderBO, ScriptWorkerRoleBO scriptWorkerRole){
         //todo ScriptWorkerList后续会有动态计算排序 平衡
         for (ScriptWorkerBO scriptWorkerBO : scriptWorkerRole.getScriptWorkerList()) {
+            //已被占用
+            if (workerLockMap.containsKey(scriptWorkerBO.getWorkerId())) {
+                continue;
+            }
+
             /**
              * 此worker可以被选
              */
             if (canBeSelectBy(jbsOrderBO, scriptWorkerBO)) {
                 scriptWorkerBO.setSelected(true);
                 scriptWorkerBO.getHasSelectedOrderList().add(jbsOrderBO);
-                workerUsedMap.get(scriptWorkerBO.getId()).add(jbsOrderBO);
+                workerUsedMap.get(scriptWorkerBO.getWorkerId()).add(jbsOrderBO);
                 return true;
             } else {
                 /**
@@ -75,21 +83,36 @@ public class WorkerCal {
                  * 如果可以找到的话，此订单就用这个worker
                  * todo 此处获取冲突订单，可能出现同时与2个以上订单冲突的情况，后续改进
                  */
-                JbsOrderBO conflictOrder = getConflictOrder(scriptWorkerBO.getWorkerId(), jbsOrderBO);
-                if (conflictOrder != null) {
-                    ScriptWorkerRoleBO conflictScriptWorkerRole = getScriptWorkerRoleByRole(conflictOrder, scriptWorkerRole.getRole());
-                    if (conflictScriptWorkerRole != null && findRoleWorker(conflictOrder, conflictScriptWorkerRole)) {
-                        scriptWorkerBO.setSelected(true);
-                        scriptWorkerBO.getHasSelectedOrderList().add(jbsOrderBO);
-                        workerUsedMap.get(scriptWorkerBO.getId()).add(jbsOrderBO);
-                        workerUsedMap.get(scriptWorkerBO.getId()).remove(conflictOrder);
-                        return true;
+                workerLockMap.put(scriptWorkerBO.getWorkerId(), true);
+                try {
+                    JbsOrderBO conflictOrder = getConflictOrder(scriptWorkerBO.getWorkerId(), jbsOrderBO);
+                    if (conflictOrder != null) {
+                        ScriptWorkerRoleBO conflictScriptWorkerRole = getScriptWorkerRoleByRole(conflictOrder, scriptWorkerRole.getRole());
+                        if (conflictScriptWorkerRole != null && findRoleWorker(conflictOrder, conflictScriptWorkerRole)) {
+                            scriptWorkerBO.setSelected(true);
+                            scriptWorkerBO.getHasSelectedOrderList().add(jbsOrderBO);
+                            cancleSelect(conflictScriptWorkerRole, scriptWorkerBO.getWorkerId());
+                            workerUsedMap.get(scriptWorkerBO.getWorkerId()).add(jbsOrderBO);
+                            workerUsedMap.get(scriptWorkerBO.getWorkerId()).remove(conflictOrder);
+                            return true;
+                        }
                     }
+                } finally {
+                    workerLockMap.remove(scriptWorkerBO.getWorkerId());
                 }
             }
         }
         return false;
 
+    }
+
+    private void cancleSelect(ScriptWorkerRoleBO conflictScriptWorkerRole, Long workerId) {
+        for (ScriptWorkerBO scriptWorkerBO : conflictScriptWorkerRole.getScriptWorkerList()) {
+            if (scriptWorkerBO.getWorkerId().equals(workerId)) {
+                scriptWorkerBO.setSelected(false);
+                return;
+            }
+        }
     }
 
     /**
@@ -106,9 +129,9 @@ public class WorkerCal {
         return null;
     }
 
-    public JbsOrderBO getConflictOrder(Long id, JbsOrderBO jbsOrderBO) {
+    public JbsOrderBO getConflictOrder(Long workerId, JbsOrderBO jbsOrderBO) {
         JbsOrderBO confliectOrder = null;
-        for (JbsOrderBO order : workerUsedMap.get(id)) {
+        for (JbsOrderBO order : workerUsedMap.get(workerId)) {
             if (DateUtil.isDateOverlapping(order.getBeginTime(), order.getEndTime(), jbsOrderBO.getBeginTime(), jbsOrderBO.getEndTime())) {
                 confliectOrder = order;
                 break;

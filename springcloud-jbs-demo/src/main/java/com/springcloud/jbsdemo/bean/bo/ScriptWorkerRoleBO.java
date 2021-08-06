@@ -27,7 +27,7 @@ public class ScriptWorkerRoleBO {
     public Long getSelectedId(){
         for (ScriptWorkerBO scriptWorkerBO : scriptWorkerList) {
             if (scriptWorkerBO.getSelected())
-                return scriptWorkerBO.getId();
+                return scriptWorkerBO.getWorkerId();
         }
         return null;
     }
