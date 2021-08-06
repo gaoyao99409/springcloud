@@ -17,15 +17,5 @@ import lombok.Data;
 public class ScriptWorkerBO extends ScriptWorker {
     private Boolean selected = false;
     private List<JbsOrderBO> hasSelectedOrderList = Lists.newArrayList();
-     /**
-     * 此worker可以被jbsOrderBO选择
-     * @param jbsOrderBO
-     * @return
-     */
-    public boolean canBeSelectBy(JbsOrderBO jbsOrderBO){
-
-        return false;
-    }
-
 
 }

@@ -1,5 +1,9 @@
 package com.springcloud.jbsdemo.service.order;
 
+import java.util.List;
+
+import com.springcloud.jbsdemo.bean.bo.JbsOrderBO;
+
 /**
  * @ClassName OrderService
  * @Description OrderService
@@ -8,5 +12,7 @@ package com.springcloud.jbsdemo.service.order;
  * @Version 1.0
  */
 public interface OrderService {
-    void findAllOrder();
+    List<JbsOrderBO> findAllOrder();
+
+    void findAllOrderWorker();
 }

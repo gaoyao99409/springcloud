@@ -28,7 +28,7 @@ public class ScriptServiceImpl implements ScriptService {
 
     @Override
     public ScriptBO getScriptBO(Long scriptId) {
-        Script script = scriptMapper.selectByPrimaryKey(scriptId);
+        Script script = scriptMapper.selectById(scriptId);
         ScriptBO scriptBO = BeanTools.copyParentToChild(Script.class, ScriptBO.class, script);
         scriptBO.setScriptWorkerRoleList(scriptWorkerService.getScriptWorkerRoleList(scriptBO.getId()));
         return scriptBO;

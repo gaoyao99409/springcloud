@@ -23,4 +23,12 @@ public class ScriptWorkerRoleBO {
         }
         return false;
     }
+
+    public Long getSelectedId(){
+        for (ScriptWorkerBO scriptWorkerBO : scriptWorkerList) {
+            if (scriptWorkerBO.getSelected())
+                return scriptWorkerBO.getId();
+        }
+        return null;
+    }
 }

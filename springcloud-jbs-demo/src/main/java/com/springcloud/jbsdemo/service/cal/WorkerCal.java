@@ -9,6 +9,7 @@ import com.springcloud.jbsdemo.bean.bo.JbsOrderBO;
 import com.springcloud.jbsdemo.bean.bo.ScriptWorkerBO;
 import com.springcloud.jbsdemo.bean.bo.ScriptWorkerRoleBO;
 import com.springcloud.jbsdemo.model.ScriptWorker;
+import com.springcloud.jbsdemo.model.Worker;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,14 +27,19 @@ public class WorkerCal {
     public void find(List<JbsOrderBO> jbsOrderBOList) {
         for (JbsOrderBO jbsOrderBO : jbsOrderBOList) {
             addWorkerUsedMap(jbsOrderBO);
-            new WorkerCal().findOrderRole(jbsOrderBO);
+            findOrderRole(jbsOrderBO);
         }
     }
 
+    /**
+     * 初始化workerUsedMap
+     * @param jbsOrderBO
+     */
     private void addWorkerUsedMap(JbsOrderBO jbsOrderBO) {
         for (ScriptWorkerRoleBO scriptWorkerRoleBO : jbsOrderBO.getScript().getScriptWorkerRoleList()) {
             for (ScriptWorker scriptWorker : scriptWorkerRoleBO.getScriptWorkerList()) {
-                workerUsedMap.put(scriptWorker.getId(), null);
+                //todo 此处初始化 后续可以把已经分好的订单数据加入到workerUsedMap中。 只有新订单没有worker数据
+                workerUsedMap.put(scriptWorker.getWorkerId(), Lists.newArrayList());
             }
         }
     }
@@ -42,6 +48,7 @@ public class WorkerCal {
         for(ScriptWorkerRoleBO scriptWorkerRole : jbsOrderBO.getScript().getScriptWorkerRoleList()) {
             findRoleWorker(jbsOrderBO, scriptWorkerRole);
         }
+        //todo 如果有未找到的，释放占用的资源，至于占用别人不能完全恢复之前状态问题 后面再说
     }
 
     /**
@@ -50,13 +57,15 @@ public class WorkerCal {
      * @return
      */
     public boolean findRoleWorker(JbsOrderBO jbsOrderBO, ScriptWorkerRoleBO scriptWorkerRole){
+        //todo ScriptWorkerList后续会有动态计算排序 平衡
         for (ScriptWorkerBO scriptWorkerBO : scriptWorkerRole.getScriptWorkerList()) {
             /**
              * 此worker可以被选
              */
-            if (scriptWorkerBO.canBeSelectBy(jbsOrderBO)) {
+            if (canBeSelectBy(jbsOrderBO, scriptWorkerBO)) {
                 scriptWorkerBO.setSelected(true);
                 scriptWorkerBO.getHasSelectedOrderList().add(jbsOrderBO);
+                workerUsedMap.get(scriptWorkerBO.getId()).add(jbsOrderBO);
                 return true;
             } else {
                 /**
@@ -64,13 +73,16 @@ public class WorkerCal {
                  * 抢占worker
                  * 让被抢的order去找其他worker
                  * 如果可以找到的话，此订单就用这个worker
+                 * todo 此处获取冲突订单，可能出现同时与2个以上订单冲突的情况，后续改进
                  */
-                JbsOrderBO conflictOrder = getConflictOrder(scriptWorkerBO.getId(), jbsOrderBO);
+                JbsOrderBO conflictOrder = getConflictOrder(scriptWorkerBO.getWorkerId(), jbsOrderBO);
                 if (conflictOrder != null) {
                     ScriptWorkerRoleBO conflictScriptWorkerRole = getScriptWorkerRoleByRole(conflictOrder, scriptWorkerRole.getRole());
                     if (conflictScriptWorkerRole != null && findRoleWorker(conflictOrder, conflictScriptWorkerRole)) {
                         scriptWorkerBO.setSelected(true);
                         scriptWorkerBO.getHasSelectedOrderList().add(jbsOrderBO);
+                        workerUsedMap.get(scriptWorkerBO.getId()).add(jbsOrderBO);
+                        workerUsedMap.get(scriptWorkerBO.getId()).remove(conflictOrder);
                         return true;
                     }
                 }
@@ -103,6 +115,25 @@ public class WorkerCal {
             }
         }
         return confliectOrder;
+    }
+
+    /**
+     * 此worker可以被jbsOrderBO选择
+     * @param jbsOrderBO
+     * @param scriptWorkerBO
+     * @return
+     */
+    public boolean canBeSelectBy(JbsOrderBO jbsOrderBO, ScriptWorkerBO scriptWorkerBO){
+        List<JbsOrderBO> jbsOrderBOList = workerUsedMap.get(scriptWorkerBO.getWorkerId());
+        if (jbsOrderBOList == null) {
+            return true;
+        }
+        for (JbsOrderBO order : jbsOrderBOList) {
+            if (DateUtil.isDateOverlapping(order.getBeginTime(), order.getEndTime(), jbsOrderBO.getBeginTime(), jbsOrderBO.getEndTime())) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
