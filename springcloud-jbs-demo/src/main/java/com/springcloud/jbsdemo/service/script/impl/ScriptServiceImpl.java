@@ -11,7 +11,9 @@ import com.springcloud.jbsdemo.bean.bo.ScriptRoomBO;
 import com.springcloud.jbsdemo.bean.bo.ScriptWorkerBO;
 import com.springcloud.jbsdemo.bean.bo.ScriptWorkerRoleBO;
 import com.springcloud.jbsdemo.mapper.ScriptMapper;
+import com.springcloud.jbsdemo.model.JbsOrder;
 import com.springcloud.jbsdemo.model.Script;
+import com.springcloud.jbsdemo.service.order.JbsOrderWorkerService;
 import com.springcloud.jbsdemo.service.script.ScriptRoomService;
 import com.springcloud.jbsdemo.service.script.ScriptService;
 import com.springcloud.jbsdemo.service.script.ScriptWorkerService;
@@ -34,6 +36,8 @@ public class ScriptServiceImpl implements ScriptService {
     ScriptWorkerService scriptWorkerService;
     @Resource
     ScriptRoomService scriptRoomService;
+    @Resource
+    JbsOrderWorkerService jbsOrderWorkerService;
 
     @Override
     public ScriptBO getScriptBO(Long scriptId) {
