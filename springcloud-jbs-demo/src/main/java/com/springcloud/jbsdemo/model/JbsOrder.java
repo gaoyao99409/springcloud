@@ -23,6 +23,9 @@ public class JbsOrder implements Serializable {
     private Long scriptId;
 
     @ApiModelProperty(value = "")
+    private Long roomId;
+
+    @ApiModelProperty(value = "")
     private Date beginTime;
 
     @ApiModelProperty(value = "")

@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.springcloud.jbsdemo.bean.bo.JbsOrderBO;
 import com.springcloud.jbsdemo.mapper.JbsOrderMapper;
 import com.springcloud.jbsdemo.model.JbsOrder;
 import com.springcloud.jbsdemo.service.order.OrderService;
+import com.springcloud.jbsdemo.service.script.ScriptRoomService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,8 @@ public class TestController {
     JbsOrderMapper orderMapper;
     @Resource
     OrderService orderService;
+    @Resource
+    ScriptRoomService scriptRoomService;
 
     @GetMapping("/order")
     public List<JbsOrder> getOrder(){
@@ -35,7 +39,9 @@ public class TestController {
 
     @GetMapping("/find")
     public String find(){
-        orderService.findAllOrderWorker();
+        List<JbsOrderBO> orderBOList = orderService.findAllOrder();
+        orderService.findAllOrderWorker(orderBOList);
+        scriptRoomService.findAllOrderRoom(orderBOList);
         return "this is a test";
     }
 }

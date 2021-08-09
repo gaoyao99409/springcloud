@@ -47,14 +47,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void findAllOrderWorker(){
-        List<JbsOrderBO> orderBOList = findAllOrder();
+    public void findAllOrderWorker(List<JbsOrderBO> orderBOList){
         workerCal.find(orderBOList);
         for (JbsOrderBO bo : orderBOList) {
             for (ScriptWorkerRoleBO worker : bo.getScript().getScriptWorkerRoleList()) {
                 if (worker.selected()) {
                     log.info("orderId:{}, role:{}, workerId:{}", bo.getId(), worker.getRole(), worker.getSelectedId());
-                    break;
+//                    getSelectedIdΩbreak;
                 }
             }
         }

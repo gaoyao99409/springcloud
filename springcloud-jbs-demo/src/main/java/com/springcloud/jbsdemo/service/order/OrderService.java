@@ -14,5 +14,5 @@ import com.springcloud.jbsdemo.bean.bo.JbsOrderBO;
 public interface OrderService {
     List<JbsOrderBO> findAllOrder();
 
-    void findAllOrderWorker();
+    void findAllOrderWorker(List<JbsOrderBO> orderBOList);
 }
