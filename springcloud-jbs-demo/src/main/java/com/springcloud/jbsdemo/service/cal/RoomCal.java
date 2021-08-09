@@ -26,6 +26,11 @@ public class RoomCal {
         roomUsedMap.clear();
         for (JbsOrderBO jbsOrderBO : jbsOrderBOList) {
             addRoomUsedMap(jbsOrderBO);
+
+            if (jbsOrderBO.getRoomId() != null) {
+                continue;
+            }
+
             findOrderRoom(jbsOrderBO);
         }
     }
@@ -36,6 +41,9 @@ public class RoomCal {
                 roomUsedMap.put(scriptRoomBO.getRoomId(), Lists.newArrayList());
             }
         }
+        if (jbsOrderBO.getRoomId() != null) {
+            roomUsedMap.get(jbsOrderBO.getRoomId()).add(jbsOrderBO);
+        }
     }
 
     private boolean findOrderRoom(JbsOrderBO jbsOrderBO) {
@@ -45,20 +53,25 @@ public class RoomCal {
             }
             if (canSelect(jbsOrderBO, scriptRoomBO)) {
                 scriptRoomBO.setSelected(true);
+                jbsOrderBO.setRoomId(scriptRoomBO.getRoomId());
                 roomUsedMap.get(scriptRoomBO.getRoomId()).add(jbsOrderBO);
                 return true;
             } else {
                 roomLockMap.put(scriptRoomBO.getRoomId(), true);
                 try {
                     JbsOrderBO conflictOrder = getConflictOrder(jbsOrderBO, scriptRoomBO.getRoomId());
+                    Long bakRoomId = conflictOrder.getRoomId();
                     if (conflictOrder != null && findOrderRoom(conflictOrder)) {
                         ScriptRoomBO conflictRoom = getConflictRoom(conflictOrder, scriptRoomBO.getRoomId());
                         if (conflictRoom != null)
                             conflictRoom.setSelected(false);
                         scriptRoomBO.setSelected(true);
+                        jbsOrderBO.setRoomId(scriptRoomBO.getRoomId());
                         roomUsedMap.get(scriptRoomBO.getRoomId()).add(jbsOrderBO);
 
                         return true;
+                    } else {
+                        conflictOrder.setRoomId(bakRoomId);
                     }
                 } finally {
                     roomLockMap.remove(scriptRoomBO.getRoomId());

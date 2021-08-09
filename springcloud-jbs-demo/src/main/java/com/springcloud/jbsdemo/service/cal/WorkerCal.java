@@ -49,6 +49,9 @@ public class WorkerCal {
 
     public void findOrderRole(JbsOrderBO jbsOrderBO){
         for(ScriptWorkerRoleBO scriptWorkerRole : jbsOrderBO.getScript().getScriptWorkerRoleList()) {
+            if (scriptWorkerRole.selected()) {
+                continue;
+            }
             findRoleWorker(jbsOrderBO, scriptWorkerRole);
         }
         //todo 如果有未找到的，释放占用的资源，至于占用别人不能完全恢复之前状态问题 后面再说
