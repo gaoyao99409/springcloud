@@ -11,6 +11,7 @@ import com.springcloud.jbsdemo.service.order.OrderService;
 import com.springcloud.jbsdemo.service.script.ScriptRoomService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -43,5 +44,13 @@ public class TestController {
         orderService.findAllOrderWorker(orderBOList);
         scriptRoomService.findAllOrderRoom(orderBOList);
         return "this is a test";
+    }
+
+    @GetMapping("/check")
+    public String checkNewOrder(@RequestParam("scriptId") Long scriptId,
+                                @RequestParam("beginTime") String beginTime,
+                                @RequestParam("endTime") String endTime){
+
+        return "检查完毕";
     }
 }
