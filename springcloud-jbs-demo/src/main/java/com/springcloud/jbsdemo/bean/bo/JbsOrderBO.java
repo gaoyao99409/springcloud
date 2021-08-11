@@ -21,5 +21,6 @@ public class JbsOrderBO extends JbsOrder {
 
     }
 
+    private Long bakRoomId;
 
 }

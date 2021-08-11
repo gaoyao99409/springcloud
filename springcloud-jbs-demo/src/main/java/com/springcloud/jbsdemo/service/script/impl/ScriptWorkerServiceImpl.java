@@ -33,6 +33,7 @@ public class ScriptWorkerServiceImpl implements ScriptWorkerService {
     public List<ScriptWorkerRoleBO> getScriptWorkerRoleList(Long scriptId) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq("script_id", scriptId);
+        queryWrapper.eq("is_delete", 0);
         List<ScriptWorker> scriptWorkerList = scriptWorkerMapper.selectList(queryWrapper);
 
         Map<String, List<ScriptWorker>> scriptWorkerMap = scriptWorkerList.stream().collect(Collectors.groupingBy(ScriptWorker::getRoleName));

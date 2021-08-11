@@ -7,9 +7,11 @@ import javax.annotation.Resource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.springcloud.jbsdemo.bean.bo.JbsOrderBO;
 import com.springcloud.jbsdemo.bean.bo.ScriptRoomBO;
+import com.springcloud.jbsdemo.mapper.RoomMapper;
 import com.springcloud.jbsdemo.mapper.ScriptRoomMapper;
+import com.springcloud.jbsdemo.model.Room;
 import com.springcloud.jbsdemo.model.ScriptRoom;
-import com.springcloud.jbsdemo.service.cal.RoomCal;
+import com.springcloud.jbsdemo.service.cal.RoomDfsCal;
 import com.springcloud.jbsdemo.service.order.OrderService;
 import com.springcloud.jbsdemo.service.script.ScriptRoomService;
 import com.springcloud.jbsdemo.util.BeanTools;
@@ -32,7 +34,9 @@ public class ScriptRoomServiceImpl implements ScriptRoomService {
     @Resource
     OrderService orderService;
     @Resource
-    RoomCal roomCal;
+    RoomDfsCal roomCal;
+    @Resource
+    RoomMapper roomMapper;
 
     @Override
     public void findAllOrderRoom(List<JbsOrderBO> orderBOList) {
@@ -40,7 +44,8 @@ public class ScriptRoomServiceImpl implements ScriptRoomService {
         for (JbsOrderBO bo : orderBOList) {
             for (ScriptRoomBO roomBO : bo.getScript().getScriptRoomList()) {
                 if (roomBO.getSelected()) {
-                    log.info("orderId:{}, roomId:{}", bo.getId(), roomBO.getRoomId());
+                    Room room = roomMapper.selectById(roomBO.getRoomId());
+                    log.info("orderId:{}, roomId:{}", bo.getId(), room.getName());
                     break;
                 }
             }

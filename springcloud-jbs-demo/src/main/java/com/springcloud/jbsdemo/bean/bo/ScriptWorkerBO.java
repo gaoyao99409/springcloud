@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 import com.springcloud.jbsdemo.model.ScriptWorker;
+import com.springcloud.jbsdemo.model.WorkerTime;
 import lombok.Data;
 
 /**
@@ -17,6 +18,7 @@ import lombok.Data;
 public class ScriptWorkerBO extends ScriptWorker {
     private Boolean selected = false;
     private List<JbsOrderBO> hasSelectedOrderList = Lists.newArrayList();
+    private WorkerTime workerTime;
 
     private boolean lock = false;
 }

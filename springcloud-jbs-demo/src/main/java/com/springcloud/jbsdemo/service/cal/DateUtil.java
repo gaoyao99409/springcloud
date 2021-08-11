@@ -236,7 +236,7 @@ public class DateUtil {
         return null;
     }
 
-    public static Date stringDateMin(String s) {
+    public static Date stringDateToYYYYMMDD(String s) {
         Date date = null;
 
         try {
@@ -626,7 +626,7 @@ public class DateUtil {
      */
     public static String getEarliestOfMonth(String date) {
 
-        return formatDate(stringDateMin(date), "yyyy-MM") + "-01 00:00:00";
+        return formatDate(stringDateToYYYYMMDD(date), "yyyy-MM") + "-01 00:00:00";
     }
 
     /**
@@ -1914,4 +1914,9 @@ public class DateUtil {
         System.out.println(getDayOfWeekV2(parse));
     }
 
+    public static Integer getYmd(Date date) {
+        SimpleDateFormat shortsdf = new SimpleDateFormat("yyyyMMdd");
+        String ymd = shortsdf.format(date);
+        return Integer.parseInt(ymd);
+    }
 }
