@@ -1,0 +1,25 @@
+
+server:
+  port: 8081
+
+spring:
+  application:
+    name: consumer
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        file-extension: yaml
+      discovery:
+        server-addr: localhost:8848
+
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: Producer-Group

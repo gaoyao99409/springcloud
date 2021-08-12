@@ -21,6 +21,7 @@
         <module>springcloud-shardingjdbc-table</module>
         <module>test</module>
         <module>springcloud-jbs-demo</module>
+        <module>springcloud-rocketmq</module>
     </modules>
 
     <parent>
